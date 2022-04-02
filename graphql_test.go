@@ -2,6 +2,7 @@ package graphqlbenchmark
 
 import (
 	"context"
+	graphql2 "github.com/mjarkk/go-graphql"
 	"testing"
 
 	"github.com/graphql-go/graphql"
@@ -61,5 +62,12 @@ func BenchmarkThunderGraphQLMaster(b *testing.B) {
 		ctx := context.Background()
 		e := thunder.Executor{}
 		e.Execute(ctx, query, nil, q)
+	}
+}
+
+func BenchmarkMjarkkGraphQLMaster(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		mjqlSchema.Resolve([]byte("{hello}"), graphql2.ResolveOptions{})
 	}
 }

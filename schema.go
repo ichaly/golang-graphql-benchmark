@@ -3,10 +3,22 @@ package graphqlbenchmark
 import (
 	ggql "github.com/graph-gophers/graphql-go"
 	"github.com/graphql-go/graphql"
+	mjql "github.com/mjarkk/go-graphql"
 	pgql "github.com/playlyfe/go-graphql"
 	thql "github.com/samsarahq/thunder/graphql"
 	"github.com/samsarahq/thunder/graphql/schemabuilder"
 )
+
+type QueryRoot struct{}
+
+func (QueryRoot) ResolveHello() string {
+	return "world"
+}
+
+type MethodRoot struct{}
+
+var mjqlSchema = mjql.NewSchema()
+var err = mjqlSchema.Parse(QueryRoot{}, MethodRoot{}, nil)
 
 var graphQLGoSchema, _ = graphql.NewSchema(
 	graphql.SchemaConfig{
